@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@mipmap/home_icon"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@mipmap/profile_icon"
+            android:title="Perfil" />
+        <item
+            android:id="@+id/nav_contacts"
+            android:icon="@mipmap/contacts_icon"
+            android:title="Contactos" />
+        </group>
+        <item android:title="Tareas">
+            <menu>
+            <item
+                android:id="@+id/nav_individualworks"
+                android:icon="@mipmap/works_icon"
+                android:title="Individuales" />
+            <item
+                android:id="@+id/nav_groupworks"
+                android:icon="@mipmap/works_icon"
+                android:title="Grupo" />
+            </menu>
+        </item>
+        <item android:title="Proyectos">
+            <menu>
+            <item
+                android:id="@+id/nav_individualproyects"
+                android:icon="@mipmap/works_icon"
+                android:title="Individuales" />
+            <item
+                android:id="@+id/nav_groupproyects"
+                android:icon="@mipmap/works_icon"
+                android:title="Grupo" />
+            </menu>
+        </item>
+
+        <item
+            android:id="@+id/nav_exit"
+            android:icon="@mipmap/exit_icon"
+            android:title="Salir" />
+</menu>
