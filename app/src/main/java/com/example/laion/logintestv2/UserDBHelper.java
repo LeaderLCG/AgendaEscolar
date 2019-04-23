@@ -42,7 +42,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase agendaescolar) {
-        agendaescolar.execSQL("CREATE TABLE `usuarios` (`ID` integer PRIMARY KEY AUTOINCREMENT, `NombreUsuario` varchar(50) NOT NULL, " +
+        agendaescolar.execSQL("CREATE TABLE `usuarios><` (`ID` integer PRIMARY KEY AUTOINCREMENT, `NombreUsuario` varchar(50) NOT NULL, " +
                 "`Contrasena` varchar(50) NOT NULL, `Nombre` varchar(50), `Apellidos` varchar(80), `Estado` varchar(10));");
         agendaescolar.execSQL("INSERT INTO usuarios (ID, NombreUsuario, Contrasena, Estado) VALUES (1, '-', '-', 'offline');" );
     }
