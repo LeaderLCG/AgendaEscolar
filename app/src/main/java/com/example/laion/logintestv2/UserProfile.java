@@ -12,14 +12,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-public class User extends AppCompatActivity
+public class UserProfile extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user);
+        setContentView(R.layout.activity_user_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -33,6 +33,13 @@ public class User extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    public void LoginGo(){
+        UserDBHelper UDB = new UserDBHelper(this);
+        UDB.setSession(false);
+        Intent UserThenLogin = new Intent(this, Login.class);
+        startActivity(UserThenLogin);
+    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -43,30 +50,6 @@ public class User extends AppCompatActivity
         }
     }
 
-    public void LoginGo(){
-        UserDBHelper UDB = new UserDBHelper(this);
-        UDB.setSession(false);
-        Intent UserThenLogin = new Intent(this, Login.class);
-        startActivity(UserThenLogin);
-    }
-
-
-    /*public void onBackPressed1() {
-        new AlertDialog.Builder(this)
-                .setMessage("¿Estas seguro de querer cerrar sesión?")
-                .setCancelable(false)
-                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Login.session=false;
-                        User.this.finish();
-                    }
-                })
-                .setNegativeButton("No", null)
-                .show();
-    }*/
-
-
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -74,13 +57,14 @@ public class User extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            // Handle the camera action
+            Intent ProfileThenUser = new Intent(this, User.class);
+            startActivity(ProfileThenUser);
+            UserProfile.this.finish();
         } else if (id == R.id.nav_contacts) {
 
         }else if (id == R.id.nav_profile) {
-            Intent UserThenProfile = new Intent(this, UserProfile.class);
-            startActivity(UserThenProfile);
-            User.this.finish();
+            /*Intent UserThenProfile = new Intent(this, UserProfile.class);
+            startActivity(UserThenProfile);*/
         } else if (id == R.id.nav_exit) {
             new AlertDialog.Builder(this)
                     .setMessage("¿Estas seguro de querer cerrar sesión?")
@@ -88,7 +72,7 @@ public class User extends AppCompatActivity
                     .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             LoginGo();
-                            User.this.finish();
+                            UserProfile.this.finish();
                         }
                     })
                     .setNegativeButton("No", null)
