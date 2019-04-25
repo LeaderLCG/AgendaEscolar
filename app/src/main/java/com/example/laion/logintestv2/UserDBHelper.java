@@ -13,6 +13,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     public static int DATA_VERSION = 1;
     public static String DATA_BASE= "agendaescolar.db";
+    Conexion conectar = new Conexion();
 
     public UserDBHelper(Context context) {
         super(context, DATA_BASE, null, DATA_VERSION);
@@ -42,8 +43,11 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase agendaescolar) {
-        agendaescolar.execSQL("CREATE TABLE `usuarios><` (`ID` integer PRIMARY KEY AUTOINCREMENT, `NombreUsuario` varchar(50) NOT NULL, " +
+        agendaescolar.execSQL("CREATE TABLE `usuarios` (`ID` integer PRIMARY KEY AUTOINCREMENT, `NombreUsuario` varchar(50) NOT NULL, " +
                 "`Contrasena` varchar(50) NOT NULL, `Nombre` varchar(50), `Apellidos` varchar(80), `Estado` varchar(10));");
+        agendaescolar.execSQL("CREATE TABLE `Horario` (`NombreUsuario`varchar(50) NOT NULL, `Materia` varchar(45) NOT NULL, "+
+                "`Dia` varchar(45) NOT NULL, `HrInicio` varchar(45) NOT NULL, `HrFin` varchar(45) NOT NULL, `Lugar` varchar(45) NOT NULL, "+
+                "`hrsOcupadas` varchar(45) NOT NULL)");
         agendaescolar.execSQL("INSERT INTO usuarios (ID, NombreUsuario, Contrasena, Estado) VALUES (1, '-', '-', 'offline');" );
     }
 
@@ -65,11 +69,23 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     }
 
+    public String newHorario(String UserName){
+        return "";
+    }
+
+
+    public void setHorario(String UserName, String[][] matriz){
+        SQLiteDatabase agendaescolar = this.getReadableDatabase();
+        ContentValues valores = new ContentValues();
+        agendaescolar.update("Horario", valores, null, null);
+    }
+
     public boolean LogTry(String UserName, String Password){
         SQLiteDatabase agendaescolar = this.getReadableDatabase();
         String [] args = new String[] {UserName, Password};
         Cursor c = agendaescolar.rawQuery("SELECT * FROM usuarios WHERE NombreUsuario=? AND Contrasena=?", args);
         if(c !=null){
+            setSession(true);
             return true;
         }else{
             return false;

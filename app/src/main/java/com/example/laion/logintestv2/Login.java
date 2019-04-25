@@ -76,9 +76,14 @@ public class Login extends AppCompatActivity {
                                 UDB.newUser(user, pass);
                                 Login.this.finish();
                             }else{
-                                Toast.makeText(Login.this, "Usuario o Contraseña Incorrectos", Toast.LENGTH_LONG).show();
-                                UserName.setText(null);
-                                Password.setText(null);
+                                if(UDB.LogTry(user, pass)== true){
+                                    Intent transicion2 = new Intent(v.getContext(), User.class);
+                                    startActivity(transicion2);
+                                }else {
+                                    Toast.makeText(Login.this, "Usuario o Contraseña Incorrectos", Toast.LENGTH_LONG).show();
+                                    UserName.setText(null);
+                                    Password.setText(null);
+                                }
                             }
                         } catch (SQLException e1) {
                             e1.printStackTrace();
