@@ -74,6 +74,7 @@ public class Login extends AppCompatActivity {
                                 Intent transicion2 = new Intent(v.getContext(), User.class);
                                 startActivity(transicion2);
                                 UDB.newUser(user, pass);
+                                UDB.newHorario(user);
                                 Login.this.finish();
                             }else{
                                 if(UDB.LogTry(user, pass)== true){

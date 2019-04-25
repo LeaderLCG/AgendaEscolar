@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.security.MessageDigest;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 
 public class UserDBHelper extends SQLiteOpenHelper {
@@ -14,6 +17,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
     public static int DATA_VERSION = 1;
     public static String DATA_BASE= "agendaescolar.db";
     Conexion conectar = new Conexion();
+    Connection conn = null;
 
     public UserDBHelper(Context context) {
         super(context, DATA_BASE, null, DATA_VERSION);
@@ -69,15 +73,30 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     }
 
-    public String newHorario(String UserName){
-        return "";
+    public void newHorario(String UserName){
+        try {
+            conn = conectar.conectar();
+            Statement st=conn.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM Horario WHERE NombreUsuario="+UserName);
+            while (rs.next()){
+                SQLiteDatabase agendaescolar = this.getReadableDatabase();
+                ContentValues valores = new ContentValues();
+                valores.put("NombreUsuario", rs.getString("NombreUsuario"));
+                valores.put("Materia", rs.getString("Materia"));
+                valores.put("Dia", rs.getString("Dia"));
+                valores.put("HrInicio", rs.getString("HrInicio"));
+                valores.put("HrFin", rs.getString("HrFin"));
+                valores.put("Lugar", rs.getString("Lugar"));
+                valores.put("hrsOcupadas", rs.getString("hrsOcupadas"));
+                agendaescolar.update("Horario", valores, null, null);
+            }
+        }catch(Exception e){
+            e.getMessage();
+        }
     }
 
 
     public void setHorario(String UserName, String[][] matriz){
-        SQLiteDatabase agendaescolar = this.getReadableDatabase();
-        ContentValues valores = new ContentValues();
-        agendaescolar.update("Horario", valores, null, null);
     }
 
     public boolean LogTry(String UserName, String Password){
