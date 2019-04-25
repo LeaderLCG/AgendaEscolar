@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TableLayout;
+import android.widget.TextView;
 
 public class User extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -19,6 +20,7 @@ public class User extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        final UserDBHelper UDB = new UserDBHelper(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -34,6 +36,8 @@ public class User extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         TableLayout Horario = (TableLayout) findViewById(R.id.horario);
+        TextView F2C1 = (TextView) findViewById(R.id.Row1Column1);
+        F2C1.setText("UFffMan");
 
     }
 

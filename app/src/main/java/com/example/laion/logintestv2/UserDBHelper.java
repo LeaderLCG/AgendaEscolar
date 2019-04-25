@@ -96,7 +96,10 @@ public class UserDBHelper extends SQLiteOpenHelper {
     }
 
 
-    public void setHorario(String UserName, String[][] matriz){
+    public void getHorario(String UserName){
+        SQLiteDatabase agendaescolar = this.getReadableDatabase();
+        String [] args = new String[] {UserName};
+        Cursor c = agendaescolar.rawQuery("SELECT * FROM Horario WHERE NombreUsuario=?", args);
     }
 
     public boolean LogTry(String UserName, String Password){
