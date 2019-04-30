@@ -53,7 +53,7 @@ public class Login extends AppCompatActivity {
         Registrarse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent transicion1 = new Intent(v.getContext(), Register.class);
+                Intent transicion1 = new Intent(v.getContext(), RegisterOne.class);
                 startActivity(transicion1);
             }
         });

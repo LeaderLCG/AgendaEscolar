@@ -84,7 +84,9 @@ public class User extends AppCompatActivity
         if (id == R.id.nav_home) {
             // Handle the camera action
         } else if (id == R.id.nav_contacts) {
-
+            Intent UserThenContacts = new Intent(this, UserContacts.class);
+            startActivity(UserThenContacts);
+            User.this.finish();
         }else if (id == R.id.nav_profile) {
             Intent UserThenProfile = new Intent(this, UserProfile.class);
             startActivity(UserThenProfile);
