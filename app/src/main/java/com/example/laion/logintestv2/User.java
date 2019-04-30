@@ -2,8 +2,10 @@ package com.example.laion.logintestv2;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,11 +13,25 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.TableLayout;
-import android.widget.TextView;
+import android.view.View;
 
-public class User extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class User extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener,
+        MondayFragment.OnFragmentInteractionListener,
+        TuesdayFragment.OnFragmentInteractionListener,
+        WednesdayFragment.OnFragmentInteractionListener,
+        ThursdayFragment.OnFragmentInteractionListener,
+        FridayFragment.OnFragmentInteractionListener,
+        SaturdayFragment.OnFragmentInteractionListener
+{
+
+
+    MondayFragment mondayfragment;
+    TuesdayFragment tuesdayfragment;
+    WednesdayFragment wednesdayfragment;
+    ThursdayFragment thursdayfragment;
+    FridayFragment fridayfragment;
+    SaturdayFragment saturdayfragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +51,43 @@ public class User extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        TableLayout Horario = (TableLayout) findViewById(R.id.horario);
-        TextView F2C1 = (TextView) findViewById(R.id.Row1Column1);
-        F2C1.setText("UFffMan");
+        mondayfragment = new MondayFragment();
+        tuesdayfragment = new TuesdayFragment();
+        wednesdayfragment = new WednesdayFragment();
+        thursdayfragment = new ThursdayFragment();
+        fridayfragment = new FridayFragment();
+        saturdayfragment = new SaturdayFragment();
 
+        getSupportFragmentManager().beginTransaction().add(R.id.HorarioContainer, mondayfragment).commit();
+
+    }
+
+
+    public void onClickHorario(View view){
+        FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
+
+        switch (view.getId()){
+            case R.id.Lunes:
+                transaction.replace(R.id.HorarioContainer, mondayfragment);
+                break;
+            case R.id.Martes:
+                transaction.replace(R.id.HorarioContainer, tuesdayfragment);
+                break;
+            case R.id.Miercoles:
+                transaction.replace(R.id.HorarioContainer, wednesdayfragment);
+                break;
+            case R.id.Jueves:
+                transaction.replace(R.id.HorarioContainer, thursdayfragment);
+                break;
+            case R.id.Viernes:
+                transaction.replace(R.id.HorarioContainer, fridayfragment);
+                break;
+            case R.id.Sabado:
+                transaction.replace(R.id.HorarioContainer, saturdayfragment);
+                break;
+        }
+
+        transaction.commit();
     }
 
     @Override
@@ -107,5 +156,10 @@ public class User extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
