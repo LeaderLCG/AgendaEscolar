@@ -29,16 +29,16 @@ public class ItemClassAdapter extends BaseAdapter {
         TextView EEPlace = (TextView)vista.findViewById(R.id.EEPlace);
         TextView EETime = (TextView)vista.findViewById(R.id.EETime);
 
-        EE.setText("Test");
-        EEPlace.setText("TEST");
-        EETime.setText(String.valueOf(horario.length));
+        EE.setText(horario[0][i]);
+        EEPlace.setText(horario [1][i]);
+        EETime.setText(horario [2][i]);
 
         return vista;
     }
 
     @Override
     public int getCount() {
-        return 1;
+        return horario.length;
     }
 
     @Override

@@ -56,7 +56,8 @@ public class User extends AppCompatActivity implements
         tuesdayfragment = new TuesdayFragment();
 
         getSupportFragmentManager().beginTransaction().add(R.id.HorarioContainer, mondayfragment).commit();
-        Toast.makeText(User.this, UDB.TestHorario("Sacreblu"), Toast.LENGTH_LONG).show();
+        Toast.makeText(User.this, String.valueOf(UDB.testGetCursor()), Toast.LENGTH_LONG).show();
+
     }
 
 

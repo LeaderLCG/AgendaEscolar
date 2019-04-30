@@ -50,7 +50,7 @@ public class Login extends AppCompatActivity {
         IniciarSesion = (Button) this.findViewById(R.id.Ingresar);
         Registrarse = (Button) this.findViewById(R.id.Registrar);
 
-        Toast.makeText(Login.this, UDB.TestHorario("Sacreblu"), Toast.LENGTH_LONG).show();
+        //Toast.makeText(Login.this, UDB.TestHorario("Sacreblu"), Toast.LENGTH_LONG).show();
 
         Registrarse.setOnClickListener(new View.OnClickListener() {
             @Override

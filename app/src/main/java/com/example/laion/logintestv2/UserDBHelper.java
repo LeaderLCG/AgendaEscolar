@@ -93,8 +93,11 @@ public class UserDBHelper extends SQLiteOpenHelper {
             Statement st=conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM Horario WHERE NombreUsuario='"+UserName+"'");
             SQLiteDatabase agendaescolar = this.getReadableDatabase();
-            ContentValues valores = new ContentValues();
-            while (rs.next()){
+            rs.last();
+            int a = rs.getRow();
+            rs.first();
+            for (int i =0; i<a; i++){
+                ContentValues valores = new ContentValues();
                 valores.put("NombreUsuario", rs.getString("NombreUsuario"));
                 valores.put("Materia", rs.getString("Materia"));
                 valores.put("Dia", rs.getString("Dia"));
@@ -102,23 +105,26 @@ public class UserDBHelper extends SQLiteOpenHelper {
                 valores.put("HrFin", rs.getString("HrFin"));
                 valores.put("Lugar", rs.getString("Lugar"));
                 valores.put("hrsOcupadas", rs.getString("hrsOcupadas"));
+                agendaescolar.insert("Horario", null, valores);
+                rs.next();
             }
-            agendaescolar.update("Horario", valores, null, null);
             agendaescolar.close();
         }catch(Exception e){
             e.getMessage();
         }
     }
 
-    public String TestHorario(String UserName) {
-        String result = "uuf no";
+    /*public String TestHorario(String UserName) {
         try {
             conn = conectar.conectar();
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM Horario WHERE NombreUsuario='" + UserName + "'");
             SQLiteDatabase agendaescolar = this.getReadableDatabase();
-            /*ContentValues valores = new ContentValues();
-            while (rs.next()) {
+            rs.last();
+            int a = rs.getRow();
+            rs.first();
+            for (int i =0; i<a; i++){
+                ContentValues valores = new ContentValues();
                 valores.put("NombreUsuario", rs.getString("NombreUsuario"));
                 valores.put("Materia", rs.getString("Materia"));
                 valores.put("Dia", rs.getString("Dia"));
@@ -126,15 +132,24 @@ public class UserDBHelper extends SQLiteOpenHelper {
                 valores.put("HrFin", rs.getString("HrFin"));
                 valores.put("Lugar", rs.getString("Lugar"));
                 valores.put("hrsOcupadas", rs.getString("hrsOcupadas"));
-            agendaescolar.update("Horario", valores, null, null);*/
-
-            Cursor c = agendaescolar.rawQuery("SELECT * FROM usuarios", null);
+                agendaescolar.update("Horario", valores, null, null);
+                rs.next();
+            }
+            Cursor c = agendaescolar.rawQuery("SELECT * FROM Horario", null);
             c.moveToFirst();
-            return c.getString(1);
+            return String.valueOf(c.getColumnNames());
             //}
         } catch (Exception e) {
             return e.getMessage();
         }
+    }*/
+
+    public int testGetCursor(){
+        SQLiteDatabase agendaescolar = this.getReadableDatabase();
+        Cursor c = agendaescolar.rawQuery("SELECT * FROM Horario WHERE Dia='Lunes'", null);
+        //String[][] Horario = new String[3][c.getCount()]; // = new String[c.getCount()][3];
+        //c.moveToFirst();
+        return c.getCount();
     }
 
 
@@ -142,12 +157,12 @@ public class UserDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase agendaescolar = this.getReadableDatabase();
         String [] args = new String[] {Dia};
         Cursor c = agendaescolar.rawQuery("SELECT * FROM Horario WHERE Dia=?", args);
-        String[][] Horario = new String[c.getCount()][3];
+        String[][] Horario = new String[3][c.getCount()]; // = new String[c.getCount()][3];
         c.moveToFirst();
         for(int i=0; i<c.getCount(); i++){
-            Horario[i][0]=c.getString(1);
-            Horario[i][1]=c.getString(2);
-            Horario[i][2]=c.getString(3);
+            Horario[0][i]=c.getString(1);
+            Horario[1][i]=c.getString(2);
+            Horario[2][i]=c.getString(3)+":00 - "+c.getString(4)+":00";
             c.moveToNext();
         }
         return Horario;
