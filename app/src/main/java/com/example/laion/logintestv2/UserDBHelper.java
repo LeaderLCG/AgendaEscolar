@@ -156,13 +156,13 @@ public class UserDBHelper extends SQLiteOpenHelper {
     public String[][] getHorarioDia(String Dia){
         SQLiteDatabase agendaescolar = this.getReadableDatabase();
         String [] args = new String[] {Dia};
-        Cursor c = agendaescolar.rawQuery("SELECT * FROM Horario WHERE Dia=?", args);
-        String[][] Horario = new String[3][c.getCount()]; // = new String[c.getCount()][3];
+        Cursor c = agendaescolar.rawQuery("SELECT * FROM Horario WHERE Dia=? ORDER BY HrInicio", args);
+        String[][] Horario = new String[c.getCount()][3]; // = new String[c.getCount()][3];
         c.moveToFirst();
         for(int i=0; i<c.getCount(); i++){
-            Horario[0][i]=c.getString(1);
-            Horario[1][i]=c.getString(2);
-            Horario[2][i]=c.getString(3)+":00 - "+c.getString(4)+":00";
+            Horario[i][0]=c.getString(1);
+            Horario[i][1]=c.getString(3)+":00 - "+c.getString(4)+":00";
+            Horario[i][2]=c.getString(5);
             c.moveToNext();
         }
         return Horario;

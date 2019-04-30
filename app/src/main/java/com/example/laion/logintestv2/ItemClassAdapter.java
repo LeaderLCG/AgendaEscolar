@@ -29,9 +29,9 @@ public class ItemClassAdapter extends BaseAdapter {
         TextView EEPlace = (TextView)vista.findViewById(R.id.EEPlace);
         TextView EETime = (TextView)vista.findViewById(R.id.EETime);
 
-        EE.setText(horario[0][i]);
-        EEPlace.setText(horario [1][i]);
-        EETime.setText(horario [2][i]);
+        EE.setText(horario[i][0]);
+        EEPlace.setText(horario [i][1]);
+        EETime.setText(horario[i][2]);
 
         return vista;
     }

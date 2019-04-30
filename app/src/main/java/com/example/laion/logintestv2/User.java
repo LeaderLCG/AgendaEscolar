@@ -14,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 public class User extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -54,9 +53,12 @@ public class User extends AppCompatActivity implements
 
         mondayfragment = new MondayFragment();
         tuesdayfragment = new TuesdayFragment();
+        wednesdayfragment = new WednesdayFragment();
+        thursdayfragment = new ThursdayFragment();
+        fridayfragment = new FridayFragment();
+        saturdayfragment = new SaturdayFragment();
 
         getSupportFragmentManager().beginTransaction().add(R.id.HorarioContainer, mondayfragment).commit();
-        Toast.makeText(User.this, String.valueOf(UDB.testGetCursor()), Toast.LENGTH_LONG).show();
 
     }
 
