@@ -17,7 +17,7 @@
     <TextView
         android:id="@+id/EEPlace"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="32dp"
         android:gravity="center"
         android:text="TextView"
         android:textColor="@color/colorAccent"/>

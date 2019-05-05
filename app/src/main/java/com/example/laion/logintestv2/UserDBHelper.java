@@ -171,13 +171,25 @@ public class UserDBHelper extends SQLiteOpenHelper {
     public boolean LogTry(String UserName, String Password){
         SQLiteDatabase agendaescolar = this.getReadableDatabase();
         String [] args = new String[] {UserName, Password};
-        Cursor c = agendaescolar.rawQuery("SELECT * FROM usuarios WHERE NombreUsuario=? AND Contrasena=?", args);
-        if(c !=null){
+        Cursor c = agendaescolar.rawQuery("SELECT Estado FROM usuarios WHERE NombreUsuario=? AND Contrasena=?", args);
+        if(c.getString(0)=="online"){
             setSession(true);
             return true;
         }else{
             return false;
         }
+    }
+
+    public String TESTOP(String UserName, String Password){
+        SQLiteDatabase agendaescolar = this.getReadableDatabase();
+        String [] args = new String[] {UserName, Password};
+        Cursor c = agendaescolar.rawQuery("SELECT * FROM usuarios WHERE NombreUsuario=? AND Contrasena=?", args);
+        //if(c !=null){
+            //setSession(true);
+            return c.getString(1) + c.getString(0);
+        /*}else{
+            return "nope";
+        }*/
     }
 
     public void setSession(boolean state){

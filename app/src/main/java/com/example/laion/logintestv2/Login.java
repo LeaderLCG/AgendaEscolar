@@ -37,6 +37,7 @@ public class Login extends AppCompatActivity {
             Login.this.finish();
         }
 
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -50,7 +51,6 @@ public class Login extends AppCompatActivity {
         IniciarSesion = (Button) this.findViewById(R.id.Ingresar);
         Registrarse = (Button) this.findViewById(R.id.Registrar);
 
-        //Toast.makeText(Login.this, UDB.TestHorario("Sacreblu"), Toast.LENGTH_LONG).show();
 
         Registrarse.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +59,16 @@ public class Login extends AppCompatActivity {
                 startActivity(transicion1);
             }
         });
+
+        try{
+            con=conectar.conectar();
+        }catch(Exception e){
+            Toast.makeText(Login.this, "ERROR: "+e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+        if("".equals(UserName.getText()) || "".equals(Password.getText())){
+
+        }
 
         try {
             con=conectar.conectar();
@@ -79,7 +89,7 @@ public class Login extends AppCompatActivity {
                                 UDB.newHorario(user);
                                 Login.this.finish();
                             }else{
-                                if(UDB.LogTry(user, pass)== true){
+                                if(UDB.LogTry(user, pass)){
                                     Intent transicion2 = new Intent(v.getContext(), User.class);
                                     startActivity(transicion2);
                                 }else {
@@ -91,9 +101,6 @@ public class Login extends AppCompatActivity {
                         } catch (SQLException e1) {
                             e1.printStackTrace();
                         }
-                    }
-                    else{
-                        Toast.makeText(Login.this, "No dejes campos vacíos", Toast.LENGTH_LONG).show();
                     }
                 }
             });
