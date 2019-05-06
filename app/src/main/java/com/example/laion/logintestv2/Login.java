@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 
@@ -24,6 +23,7 @@ public class Login extends AppCompatActivity {
     EditText UserName, Password;
     ResultSet rs;
     Statement st;
+    String user, pass;
 
 
 
@@ -63,69 +63,55 @@ public class Login extends AppCompatActivity {
         try{
             con=conectar.conectar();
         }catch(Exception e){
-            Toast.makeText(Login.this, "ERROR: "+e.getMessage(), Toast.LENGTH_LONG).show();
+            con=null;
+            Toast.makeText(Login.this, "Sin Conexion", Toast.LENGTH_LONG).show();
         }
 
-        if("".equals(UserName.getText()) || "".equals(Password.getText())){
-
-        }
-
-        try {
-            con=conectar.conectar();
-            IniciarSesion.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String user = String.valueOf(UserName.getText());
-                    String pass = UDB.getMD5(String.valueOf(Password.getText()));
-                    if(!"".equals(user) || !"".equals(pass)){
-                        try {
-                            st = con.createStatement();
-                            rs = st.executeQuery("SELECT * FROM usuarios WHERE NombreUsuario='" + user + "' AND Contrasena='" + pass + "'");
-
-                            if (rs.next()) {
-                                Intent transicion2 = new Intent(v.getContext(), User.class);
-                                startActivity(transicion2);
-                                UDB.newUser(user, pass);
-                                UDB.newHorario(user);
-                                Login.this.finish();
-                            }else{
-                                if(UDB.LogTry(user, pass)){
-                                    Intent transicion2 = new Intent(v.getContext(), User.class);
-                                    startActivity(transicion2);
-                                }else {
-                                    Toast.makeText(Login.this, "Usuario o Contraseña Incorrectos", Toast.LENGTH_LONG).show();
-                                    UserName.setText(null);
-                                    Password.setText(null);
-                                }
-                            }
-                        } catch (SQLException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
+        IniciarSesion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    con=conectar.conectar();
+                }catch(Exception e){
+                    con=null;
                 }
-            });
-        }catch (Exception e) {
-            Toast.makeText(Login.this, "Sin conexión", Toast.LENGTH_LONG).show();
-            IniciarSesion.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String user = String.valueOf(UserName.getText());
-                    String pass = String.valueOf(Password.getText());
-                    if(!"".equals(user) || !"".equals(pass)) {
-                        if(UDB.LogTry(user, pass)==true){
-                            Intent logged = new Intent(v.getContext(), User.class);
-                            startActivity(logged);
-                            Login.this.finish();
-                        }else{
+                if("".equals(UserName.getText()) || "".equals(Password.getText())){
+                    Toast.makeText(Login.this, "No dejes campos vacíos", Toast.LENGTH_LONG).show();
+                }else{
+                    user = String.valueOf(UserName.getText());
+                    pass = UDB.getMD5(String.valueOf(Password.getText()));
+                    if(con==null){
+                        if(UDB.LogTry(user, pass)){
+                            Intent transicion2 = new Intent(v.getContext(), User.class);
+                            startActivity(transicion2);
+                        }else {
                             Toast.makeText(Login.this, "Usuario o Contraseña Incorrectos", Toast.LENGTH_LONG).show();
                             UserName.setText(null);
                             Password.setText(null);
                         }
                     }else{
-                        Toast.makeText(Login.this, "No dejes campos vacíos", Toast.LENGTH_LONG).show();
+                        try{
+                            st = con.createStatement();
+                            rs = st.executeQuery("SELECT * FROM usuarios WHERE NombreUsuario='" + user + "' AND Contrasena='" + pass + "'");
+
+                            if (rs.next()) {
+                                UDB.newUser(user, pass);
+                                UDB.newHorario(user);
+                                Intent transicion2 = new Intent(v.getContext(), User.class);
+                                startActivity(transicion2);
+                                Login.this.finish();
+                            }else{
+                                Toast.makeText(Login.this, "Usuario o Contraseña Incorrectos", Toast.LENGTH_LONG).show();
+                                UserName.setText(null);
+                                Password.setText(null);
+                            }
+                        }catch(Exception e){
+                            Toast.makeText(Login.this, "ERROR: "+e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
-            });
+            }
+        });
+
         }
     }
-}
