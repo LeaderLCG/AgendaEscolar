@@ -93,6 +93,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
             Statement st=conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM Horario WHERE NombreUsuario='"+UserName+"'");
             SQLiteDatabase agendaescolar = this.getReadableDatabase();
+            agendaescolar.execSQL("DELETE FROM Horario;");
             rs.last();
             int a = rs.getRow();
             rs.first();
@@ -172,13 +173,24 @@ public class UserDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase agendaescolar = this.getReadableDatabase();
         String [] args = new String[] {UserName, Password};
         Cursor c = agendaescolar.rawQuery("SELECT * FROM usuarios WHERE NombreUsuario=? AND Contrasena=?", args);
-        if(c !=null){
+        if(c.getCount()!=0){
             setSession(true);
             return true;
         }else{
             return false;
         }
     }
+
+    /*public String TESTOP(String UserName, String Password){
+        SQLiteDatabase agendaescolar = this.getReadableDatabase();
+        String [] args = new String[] {UserName, Password};
+        Cursor c = agendaescolar.rawQuery("SELECT * FROM usuarios WHERE NombreUsuario=? AND Contrasena=?", args);
+        if(c !=null){
+            return String.valueOf(c.getCount());
+        }else{
+            return "nope";
+        }
+    }*/
 
     public void setSession(boolean state){
             SQLiteDatabase agendaescolar = this.getReadableDatabase();
