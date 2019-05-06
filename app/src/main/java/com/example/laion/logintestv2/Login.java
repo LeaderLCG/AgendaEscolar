@@ -93,7 +93,6 @@ public class Login extends AppCompatActivity {
                         try{
                             st = con.createStatement();
                             rs = st.executeQuery("SELECT * FROM usuarios WHERE NombreUsuario='" + user + "' AND Contrasena='" + pass + "'");
-                            rs.next();
                             if (rs.next()) {
                                 UDB.newUser(user, pass);
                                 UDB.newHorario(user);
