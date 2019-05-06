@@ -93,6 +93,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
             Statement st=conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM Horario WHERE NombreUsuario='"+UserName+"'");
             SQLiteDatabase agendaescolar = this.getReadableDatabase();
+            agendaescolar.execSQL("DELETE FROM Horario;");
             rs.last();
             int a = rs.getRow();
             rs.first();
@@ -171,8 +172,8 @@ public class UserDBHelper extends SQLiteOpenHelper {
     public boolean LogTry(String UserName, String Password){
         SQLiteDatabase agendaescolar = this.getReadableDatabase();
         String [] args = new String[] {UserName, Password};
-        Cursor c = agendaescolar.rawQuery("SELECT Estado FROM usuarios WHERE NombreUsuario=? AND Contrasena=?", args);
-        if(c.getString(0)=="online"){
+        Cursor c = agendaescolar.rawQuery("SELECT * FROM usuarios WHERE NombreUsuario=? AND Contrasena=?", args);
+        if(c.getCount()!=0){
             setSession(true);
             return true;
         }else{
@@ -180,17 +181,16 @@ public class UserDBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public String TESTOP(String UserName, String Password){
+    /*public String TESTOP(String UserName, String Password){
         SQLiteDatabase agendaescolar = this.getReadableDatabase();
         String [] args = new String[] {UserName, Password};
         Cursor c = agendaescolar.rawQuery("SELECT * FROM usuarios WHERE NombreUsuario=? AND Contrasena=?", args);
-        //if(c !=null){
-            //setSession(true);
-            return c.getString(1) + c.getString(0);
-        /*}else{
+        if(c !=null){
+            return String.valueOf(c.getCount());
+        }else{
             return "nope";
-        }*/
-    }
+        }
+    }*/
 
     public void setSession(boolean state){
             SQLiteDatabase agendaescolar = this.getReadableDatabase();
