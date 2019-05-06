@@ -71,7 +71,7 @@ public class Login extends AppCompatActivity {
                         try {
                             st = con.createStatement();
                             rs = st.executeQuery("SELECT * FROM usuarios WHERE NombreUsuario='" + user + "' AND Contrasena='" + pass + "'");
-
+                            rs.next();
                             if (rs.next()) {
                                 Intent transicion2 = new Intent(v.getContext(), User.class);
                                 startActivity(transicion2);
