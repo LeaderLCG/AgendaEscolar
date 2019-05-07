@@ -62,9 +62,15 @@ public class UserDBHelper extends SQLiteOpenHelper {
                 "  `Contrasena` varchar(50) NOT NULL,\n" +
                 "  `Nombre` varchar(50),\n" +
                 "  `Apellidos` varchar(80),\n" +
+                "  `NumeroTelefonico` varchar (15), \n"+
+                "  `CorreoElectronico` varchar (50), \n"+
+                "  `Carrera` varchar (50), \n"+
+                "  `Institucion` varchar (70), \n"+
                 "  `Estado` varchar(10)\n" +
                 ");");
-        agendaescolar.execSQL("INSERT INTO usuarios (ID, NombreUsuario, Contrasena, Estado) VALUES (1, '-', '-', 'offline');" );
+        agendaescolar.execSQL("INSERT INTO usuarios (ID, NombreUsuario, Contrasena, Nombre, Apellidos, " +
+                "NumeroTelefonico, CorreoElectronico, Carrera, Institucion, Estado) " +
+                "VALUES (1, '-', '-', '-', '-', '-', '-', '-', '-', 'offline');" );
         agendaescolar.execSQL("INSERT INTO Horario (NombreUsuario, Materia, Dia, HrInicio, HrFin, Lugar, hrsOcupadas) VALUES ('-', '-', '-', '-', '-', '-', '-');");
     }
 
@@ -79,6 +85,34 @@ public class UserDBHelper extends SQLiteOpenHelper {
         agendaescolar.update("usuarios", valores, "ID=1", null);
 
         agendaescolar.close();
+    }
+
+    public void setPersonalInfo(String PersonalInfo[]){
+        SQLiteDatabase agendaescolar = this.getReadableDatabase();
+        ContentValues valores = new ContentValues();
+
+        valores.put("Nombre", PersonalInfo[0]);
+        valores.put("Apellidos", PersonalInfo[1]);
+        valores.put("NumeroTelefonico", PersonalInfo[2]);
+        valores.put("CorreoElectronico", PersonalInfo[3]);
+        valores.put("Carrera", PersonalInfo[4]);
+        valores.put("Institucion", PersonalInfo[5]);
+
+        agendaescolar.update("usuarios", valores, "ID=1", null);
+
+        agendaescolar.close();
+    }
+
+    public String [] getPersonalInfo(){
+        String [] PersonalInformation = new String [8];
+        SQLiteDatabase agendaescolar = this.getReadableDatabase();
+        Cursor c = agendaescolar.rawQuery("SELECT * FROM usuarios", null);
+        c.moveToFirst();
+        for(int i=1; i<9; i++){
+            PersonalInformation[i-1]=c.getString(i);
+        }
+
+        return PersonalInformation;
     }
 
     @Override

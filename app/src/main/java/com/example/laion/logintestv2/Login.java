@@ -94,6 +94,14 @@ public class Login extends AppCompatActivity {
                             st = con.createStatement();
                             rs = st.executeQuery("SELECT * FROM usuarios WHERE NombreUsuario='" + user + "' AND Contrasena='" + pass + "'");
                             if (rs.next()) {
+                                String [] Personalinfo = new String[6];
+                                Personalinfo[0]=rs.getString("Nombre");
+                                Personalinfo[1]=rs.getString("Apellidos");
+                                Personalinfo[2]=rs.getString("Correo");
+                                Personalinfo[3]=rs.getString("Telefono");
+                                Personalinfo[4]=rs.getString("Carrera");
+                                Personalinfo[5]=rs.getString("Institucion");
+                                UDB.setPersonalInfo(Personalinfo);
                                 UDB.newUser(user, pass);
                                 UDB.newHorario(user);
                                 Intent transicion2 = new Intent(v.getContext(), User.class);

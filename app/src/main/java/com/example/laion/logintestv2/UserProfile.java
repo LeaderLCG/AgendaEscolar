@@ -11,12 +11,16 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class UserProfile extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        UserDBHelper UDB = new UserDBHelper(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
@@ -31,6 +35,13 @@ public class UserProfile extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        TextView NombrePrincipal = (TextView) this.findViewById(R.id.NombrePrincipal);
+        TextView UsuarioSecundario = (TextView) this.findViewById(R.id.UsuarioSecundario);
+        String [] PersonalInfo = UDB.getPersonalInfo();
+
+        NombrePrincipal.setText(PersonalInfo[2]+" "+PersonalInfo[3]);
+        UsuarioSecundario.setText("@"+PersonalInfo[0]);
     }
 
     public void LoginGo(){
