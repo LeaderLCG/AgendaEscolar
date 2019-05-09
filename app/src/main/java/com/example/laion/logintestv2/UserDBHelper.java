@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.security.MessageDigest;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -248,6 +249,36 @@ public class UserDBHelper extends SQLiteOpenHelper {
                 return false;
             }
         }else{
+            return false;
+        }
+    }
+
+    public boolean refreshData(String[] personalData) {
+        try {
+            personalData[1]=getMD5(personalData[1]);
+            conn = conectar.conectar();
+            PreparedStatement stm = conn.prepareStatement("UPDATE usuarios SET NombreUsuario=?, " +
+                    "Contrasena=?, Nombre=?, Apellidos=?, Telefono=?, Correo=?, Carrera=?, Institucion=?");
+            for(int i=0; i<8; i++){
+                stm.setString(i+1, personalData[i]);
+            }
+            stm.executeUpdate();
+            SQLiteDatabase agendaescolar = this.getReadableDatabase();
+            ContentValues valores = new ContentValues();
+
+            valores.put("NombreUsuario", personalData[0]);
+            valores.put("Contrasena", personalData[1]);
+            valores.put("Nombre", personalData[2]);
+            valores.put("Apellidos", personalData[3]);
+            valores.put("NumeroTelefonico", personalData[4]);
+            valores.put("CorreoElectronico", personalData[5]);
+            valores.put("Carrera", personalData[6]);
+            valores.put("Institucion", personalData[7]);
+            agendaescolar.update("usuarios", valores, "ID=1", null);
+            agendaescolar.close();
+
+            return true;
+        }catch(Exception e){
             return false;
         }
     }
