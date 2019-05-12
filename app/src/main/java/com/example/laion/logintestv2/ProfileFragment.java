@@ -250,9 +250,9 @@ public class ProfileFragment extends Fragment {
         PersonalData[6]= String.valueOf(CarreraInput.getText());
         PersonalData[7]= String.valueOf(InstitucionInput.getText());
 
-        if(!UDB.refreshData(PersonalData)){
-            Toast.makeText(getActivity().getBaseContext(), "No puedes actualizar sin conexion", Toast.LENGTH_LONG).show();
-        }else{
+        String test = UDB.refreshData(PersonalData);
+
+        if(test=="KO"){
             PersonalData=UDB.getPersonalInfo();
             NombreInput.setText(PersonalData[2]);
             ApellidoInput.setText(PersonalData[3]);
@@ -262,6 +262,8 @@ public class ProfileFragment extends Fragment {
             CarreraInput.setText(PersonalData[6]);
             InstitucionInput.setText(PersonalData[7]);
             Toast.makeText(getActivity().getBaseContext(), "Actualizacion exitosa", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(getActivity().getBaseContext(), test, Toast.LENGTH_LONG).show();
         }
 
     }

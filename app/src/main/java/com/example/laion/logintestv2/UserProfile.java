@@ -2,6 +2,8 @@ package com.example.laion.logintestv2;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +19,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserProfile extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -24,6 +33,9 @@ public class UserProfile extends AppCompatActivity implements
         {
 
     ProfileFragment profileFragment;
+    private CircleImageView perfil;
+    private Bitmap imagencargada;
+    private String imageaddres="https://raw.githubusercontent.com/Sacreblu/AgendaEscolarWeb/master/AgendaEscolar/Complementos/FotoPerfil/Sacreblu.jpg";
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -53,6 +65,9 @@ public class UserProfile extends AppCompatActivity implements
 
         profileFragment = new ProfileFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.PersonalContainer, profileFragment).commit();
+
+        perfil = (CircleImageView) this.findViewById(R.id.FotoPerfil);
+        downloadProfilePicture(imageaddres);
 
         Button ModificarButton = (Button) this.findViewById(R.id.ModificarButton);
         Button GuardarButton = (Button) this.findViewById(R.id.GuardarButton);
@@ -87,6 +102,19 @@ public class UserProfile extends AppCompatActivity implements
         UDB.setSession(false);
         Intent UserThenLogin = new Intent(this, Login.class);
         startActivity(UserThenLogin);
+    }
+
+    public void downloadProfilePicture(String imageaddres){
+        URL imageURL=null;
+        try {
+            imageURL = new URL(imageaddres);
+            HttpURLConnection conn = (HttpURLConnection) imageURL.openConnection();
+            conn.connect();
+            imagencargada = BitmapFactory.decodeStream(conn.getInputStream());
+            perfil.setImageBitmap(imagencargada);
+        } catch (IOException e) {
+            Toast.makeText(getApplicationContext(), "Error cargando la imagen: "+e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

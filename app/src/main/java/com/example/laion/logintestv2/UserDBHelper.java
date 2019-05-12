@@ -253,12 +253,12 @@ public class UserDBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean refreshData(String[] personalData) {
+    public String refreshData(String[] personalData) {
         try {
             personalData[1]=getMD5(personalData[1]);
             conn = conectar.conectar();
             PreparedStatement stm = conn.prepareStatement("UPDATE usuarios SET NombreUsuario=?, " +
-                    "Contrasena=?, Nombre=?, Apellidos=?, Telefono=?, Correo=?, Carrera=?, Institucion=?");
+                    "Contrasena=?, Nombre=?, Apellidos=?, Telefono=?, Correo=?, Carrera=?, Institucion=? WHERE NombreUsuario=g"+getPersonalInfo()[1]);
             for(int i=0; i<8; i++){
                 stm.setString(i+1, personalData[i]);
             }
@@ -277,9 +277,9 @@ public class UserDBHelper extends SQLiteOpenHelper {
             agendaescolar.update("usuarios", valores, "ID=1", null);
             agendaescolar.close();
 
-            return true;
+            return "KO";
         }catch(Exception e){
-            return false;
+            return e.getMessage();
         }
     }
 }
