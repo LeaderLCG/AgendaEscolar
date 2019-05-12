@@ -10,4 +10,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_user_contacts">Contactos</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="contactos">Contactos</string>
+    <string name="buscar_contacto">Buscar contacto</string>
+    <string name="buscar">Buscar</string>
 </resources>

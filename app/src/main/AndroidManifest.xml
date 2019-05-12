@@ -11,10 +11,11 @@
         android:roundIcon="@mipmap/icon1"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserContacts"
+        <activity android:name=".contacts_list"></activity>
+        <activity
+            android:name=".UserContacts"
             android:label="@string/title_user_contacts"
-            android:theme="@style/AppTheme.NoActionBar"
-        />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RegisterOne" />
         <activity android:name=".RegisterTwo" />
         <activity android:name=".Login">
