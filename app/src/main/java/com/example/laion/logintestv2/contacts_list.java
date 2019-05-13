@@ -8,6 +8,6 @@ public class contacts_list extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contacts_list);
+        //setContentView(R.layout.activity_contacts_list);
     }
 }

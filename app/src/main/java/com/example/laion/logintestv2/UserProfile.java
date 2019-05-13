@@ -18,10 +18,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -36,6 +39,7 @@ public class UserProfile extends AppCompatActivity implements
     private CircleImageView perfil;
     private Bitmap imagencargada;
     private String imageaddres="https://raw.githubusercontent.com/Sacreblu/AgendaEscolarWeb/master/AgendaEscolar/Complementos/FotoPerfil/Sacreblu.jpg";
+    private static final int SELECT_FILE = 1;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -60,6 +64,8 @@ public class UserProfile extends AppCompatActivity implements
         TextView UsuarioSecundario = (TextView) this.findViewById(R.id.UsuarioSecundario);
         String [] PersonalInfo = UDB.getPersonalInfo();
 
+        Switch switchhorario = (Switch) this.findViewById(R.id.switch1);
+
         NombrePrincipal.setText(PersonalInfo[2]+" "+PersonalInfo[3]);
         UsuarioSecundario.setText("@"+PersonalInfo[0]);
 
@@ -67,6 +73,16 @@ public class UserProfile extends AppCompatActivity implements
         getSupportFragmentManager().beginTransaction().add(R.id.PersonalContainer, profileFragment).commit();
 
         perfil = (CircleImageView) this.findViewById(R.id.FotoPerfil);
+        perfil.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(
+                        Intent.createChooser(intent, "Seleccione una imagen"), SELECT_FILE);
+            }
+        });
         downloadProfilePicture(imageaddres);
 
         Button ModificarButton = (Button) this.findViewById(R.id.ModificarButton);
@@ -165,5 +181,41 @@ public class UserProfile extends AppCompatActivity implements
             @Override
             public void onFragmentInteraction(Uri uri) {
 
+            }
+
+            protected void onActivityResult(int requestCode, int resultCode,
+                                            Intent imageReturnedIntent) {
+                super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+                Uri selectedImageUri = null;
+                Uri selectedImage;
+
+                String filePath = null;
+                switch (requestCode) {
+                    case SELECT_FILE:
+                        if (resultCode == UserProfile.RESULT_OK) {
+                            selectedImage = imageReturnedIntent.getData();
+                            String selectedPath=selectedImage.getPath();
+                            if (requestCode == SELECT_FILE) {
+
+                                if (selectedPath != null) {
+                                    InputStream imageStream = null;
+                                    try {
+                                        imageStream = getContentResolver().openInputStream(
+                                                selectedImage);
+                                    } catch (FileNotFoundException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    // Transformamos la URI de la imagen a inputStream y este a un Bitmap
+                                    Bitmap bmp = BitmapFactory.decodeStream(imageStream);
+
+                                    // Ponemos nuestro bitmap en un ImageView que tengamos en la vista
+                                    perfil.setImageBitmap(bmp);
+
+                                }
+                            }
+                        }
+                        break;
+                }
             }
         }

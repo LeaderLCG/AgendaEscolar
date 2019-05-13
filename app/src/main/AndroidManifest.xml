@@ -33,7 +33,8 @@
         <activity
             android:name=".UserProfile"
             android:label="Perfil"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>

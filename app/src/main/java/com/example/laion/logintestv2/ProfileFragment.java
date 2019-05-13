@@ -240,9 +240,11 @@ public class ProfileFragment extends Fragment {
 
     public void save(){
 
+        if(!"".equals(ContrasenaInput.getText())){
+            PersonalData[1]= String.valueOf(ContrasenaInput.getText());
+        }
         UserDBHelper UDB = new UserDBHelper(this.getActivity().getApplicationContext());
         PersonalData[0]= String.valueOf(UserNameInput.getText());
-        PersonalData[1]= String.valueOf(ContrasenaInput.getText());
         PersonalData[2]= String.valueOf(NombreInput.getText());
         PersonalData[3]= String.valueOf(ApellidoInput.getText());
         PersonalData[4]= String.valueOf(TelefonoInput.getText());
@@ -250,9 +252,8 @@ public class ProfileFragment extends Fragment {
         PersonalData[6]= String.valueOf(CarreraInput.getText());
         PersonalData[7]= String.valueOf(InstitucionInput.getText());
 
-        String test = UDB.refreshData(PersonalData);
 
-        if(test=="KO"){
+        if(UDB.refreshData(PersonalData)){
             PersonalData=UDB.getPersonalInfo();
             NombreInput.setText(PersonalData[2]);
             ApellidoInput.setText(PersonalData[3]);
@@ -263,7 +264,7 @@ public class ProfileFragment extends Fragment {
             InstitucionInput.setText(PersonalData[7]);
             Toast.makeText(getActivity().getBaseContext(), "Actualizacion exitosa", Toast.LENGTH_LONG).show();
         }else{
-            Toast.makeText(getActivity().getBaseContext(), test, Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity().getBaseContext(), "Hubo un fallo al actualizar", Toast.LENGTH_LONG).show();
         }
 
     }
