@@ -104,14 +104,14 @@ public class User extends AppCompatActivity implements
         fabAgregarHorario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v,"¿Quieres agregar algo?",Snackbar.LENGTH_LONG)
+                Snackbar.make(v,"¿Quieres agregar una materia?",Snackbar.LENGTH_LONG)
                         .setActionTextColor(getResources().getColor(R.color.colorPrimary))
                         .setAction("SI", new
                         View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Log.i("Snackbar", "Pulsa si o no pulses");
-                                Intent intentSchedule = new Intent(User.this, ScheduleRecord.class);
+                                Intent intentSchedule = new Intent(User.this, RegisterMatter.class);
                                 startActivity(intentSchedule);
                             }
                         }).show();

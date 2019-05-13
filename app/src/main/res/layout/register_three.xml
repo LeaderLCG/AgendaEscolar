@@ -55,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:singleLine="true"
+                android:maxLength="16"
                 android:password="true"
                 />
 
@@ -64,6 +65,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:singleLine="true"
+                android:maxLength="16"
                 android:password="true"
                 android:layout_marginLeft="50dp"
                 />

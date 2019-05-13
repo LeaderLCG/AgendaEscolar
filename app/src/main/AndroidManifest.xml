@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/icon1"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ScheduleRecord"></activity>
+        <activity android:name=".RegisterMatter"></activity>
         <activity
             android:name=".UserContacts"
             android:label="@string/title_user_contacts"
