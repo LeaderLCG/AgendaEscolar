@@ -65,6 +65,11 @@ public class UserProfile extends AppCompatActivity implements
         String [] PersonalInfo = UDB.getPersonalInfo();
 
         Switch switchhorario = (Switch) this.findViewById(R.id.switch1);
+        try {
+            switchhorario.setChecked(UDB.checkPrivacidadHorario());
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Error cargando privacidad de horario: "+e.getMessage(), Toast.LENGTH_LONG).show();
+        }
 
         NombrePrincipal.setText(PersonalInfo[2]+" "+PersonalInfo[3]);
         UsuarioSecundario.setText("@"+PersonalInfo[0]);
@@ -107,7 +112,11 @@ public class UserProfile extends AppCompatActivity implements
         GuardarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                profileFragment.save();
+                try {
+                    profileFragment.save();
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Error al guardar tus Datos.", Toast.LENGTH_LONG).show();
+                }
             }
         });
 

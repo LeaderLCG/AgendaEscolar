@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 
@@ -34,6 +35,7 @@ public class ProfileFragment extends Fragment {
     EditText CorreoInput;
     EditText CarreraInput;
     EditText InstitucionInput;
+    Switch switchhorario;
 
     public static String PersonalData[];
 
@@ -131,13 +133,7 @@ public class ProfileFragment extends Fragment {
         CorreoInput = (EditText) getView().findViewById(R.id.CorreoInput);
         CarreraInput = (EditText) getView().findViewById(R.id.CarreraInput);
         InstitucionInput = (EditText) getView().findViewById(R.id.InstitucionInput);
-
-
-        /*Button ModificarButton = (Button) getView().findViewById(R.id.ModificarButton);
-        Button GuardarButton = (Button) getView().findViewById(R.id.GuardarButton);
-        Button CancelarButton = (Button) getView().findViewById(R.id.CancelarButton);
-        Button EliminarButton = (Button) getView().findViewById(R.id.EliminarButton);*/
-
+        switchhorario = (Switch) getView().findViewById(R.id.switch1);
 
         UserDBHelper UDB = new UserDBHelper(this.getActivity().getApplicationContext());
         PersonalData=UDB.getPersonalInfo();
@@ -238,11 +234,13 @@ public class ProfileFragment extends Fragment {
         InstitucionInput.setEnabled(false);
     }
 
-    public void save(){
+    public void save() throws Exception {
 
         if(!"".equals(ContrasenaInput.getText())){
             PersonalData[1]= String.valueOf(ContrasenaInput.getText());
         }
+
+
         UserDBHelper UDB = new UserDBHelper(this.getActivity().getApplicationContext());
         PersonalData[0]= String.valueOf(UserNameInput.getText());
         PersonalData[2]= String.valueOf(NombreInput.getText());
@@ -251,6 +249,13 @@ public class ProfileFragment extends Fragment {
         PersonalData[5]= String.valueOf(CorreoInput.getText());
         PersonalData[6]= String.valueOf(CarreraInput.getText());
         PersonalData[7]= String.valueOf(InstitucionInput.getText());
+
+
+        if(switchhorario.isChecked()){
+            UDB.setPrivacidadHorario(true);
+        }else{
+            UDB.setPrivacidadHorario(false);
+        }
 
 
         if(UDB.refreshData(PersonalData)){

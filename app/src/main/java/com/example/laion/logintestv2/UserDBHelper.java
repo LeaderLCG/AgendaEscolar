@@ -16,7 +16,7 @@ import java.sql.Statement;
 public class UserDBHelper extends SQLiteOpenHelper {
 
     public static int DATA_VERSION = 1;
-    public static String DATA_BASE= "agendaescolar.db";
+    public static String DATA_BASE = "agendaescolar.db";
     Conexion conectar = new Conexion();
     Connection conn = null;
 
@@ -26,20 +26,20 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
 
     public String getMD5(final String s) {
-        try{
+        try {
             MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
             digest.update(s.getBytes());
             byte messageDigest[] = digest.digest();
             StringBuilder hexString = new StringBuilder();
-            for(int i = 0; i < messageDigest.length; i++){
+            for (int i = 0; i < messageDigest.length; i++) {
                 String h = Integer.toHexString(0xFF & messageDigest[i]);
-                while(h.length() < 2){
+                while (h.length() < 2) {
                     h = "0" + h;
                 }
                 hexString.append(h);
             }
             return hexString.toString();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.getMessage();
         }
         return "";
@@ -63,19 +63,19 @@ public class UserDBHelper extends SQLiteOpenHelper {
                 "  `Contrasena` varchar(50) NOT NULL,\n" +
                 "  `Nombre` varchar(50),\n" +
                 "  `Apellidos` varchar(80),\n" +
-                "  `NumeroTelefonico` varchar (15), \n"+
-                "  `CorreoElectronico` varchar (50), \n"+
-                "  `Carrera` varchar (50), \n"+
-                "  `Institucion` varchar (70), \n"+
+                "  `NumeroTelefonico` varchar (15), \n" +
+                "  `CorreoElectronico` varchar (50), \n" +
+                "  `Carrera` varchar (50), \n" +
+                "  `Institucion` varchar (70), \n" +
                 "  `Estado` varchar(10)\n" +
                 ");");
         agendaescolar.execSQL("INSERT INTO usuarios (ID, NombreUsuario, Contrasena, Nombre, Apellidos, " +
                 "NumeroTelefonico, CorreoElectronico, Carrera, Institucion, Estado) " +
-                "VALUES (1, '-', '-', '-', '-', '-', '-', '-', '-', 'offline');" );
+                "VALUES (1, '-', '-', '-', '-', '-', '-', '-', '-', 'offline');");
         agendaescolar.execSQL("INSERT INTO Horario (NombreUsuario, Materia, Dia, HrInicio, HrFin, Lugar, hrsOcupadas) VALUES ('-', '-', '-', '-', '-', '-', '-');");
     }
 
-    public void newUser(String UserName, String Contrasena){
+    public void newUser(String UserName, String Contrasena) {
         SQLiteDatabase agendaescolar = this.getReadableDatabase();
         ContentValues valores = new ContentValues();
 
@@ -88,7 +88,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
         agendaescolar.close();
     }
 
-    public void setPersonalInfo(String PersonalInfo[]){
+    public void setPersonalInfo(String PersonalInfo[]) {
         SQLiteDatabase agendaescolar = this.getReadableDatabase();
         ContentValues valores = new ContentValues();
 
@@ -104,13 +104,13 @@ public class UserDBHelper extends SQLiteOpenHelper {
         agendaescolar.close();
     }
 
-    public String [] getPersonalInfo(){
-        String [] PersonalInformation = new String [8];
+    public String[] getPersonalInfo() {
+        String[] PersonalInformation = new String[8];
         SQLiteDatabase agendaescolar = this.getReadableDatabase();
         Cursor c = agendaescolar.rawQuery("SELECT * FROM usuarios", null);
         c.moveToFirst();
-        for(int i=1; i<9; i++){
-            PersonalInformation[i-1]=c.getString(i);
+        for (int i = 1; i < 9; i++) {
+            PersonalInformation[i - 1] = c.getString(i);
         }
 
         return PersonalInformation;
@@ -122,17 +122,17 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     }
 
-    public void newHorario(String UserName){
+    public void newHorario(String UserName) {
         try {
             conn = conectar.conectar();
-            Statement st=conn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM Horario WHERE NombreUsuario='"+UserName+"'");
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM Horario WHERE NombreUsuario='" + UserName + "'");
             SQLiteDatabase agendaescolar = this.getReadableDatabase();
             agendaescolar.execSQL("DELETE FROM Horario;");
             rs.last();
             int a = rs.getRow();
             rs.first();
-            for (int i =0; i<a; i++){
+            for (int i = 0; i < a; i++) {
                 ContentValues valores = new ContentValues();
                 valores.put("NombreUsuario", rs.getString("NombreUsuario"));
                 valores.put("Materia", rs.getString("Materia"));
@@ -145,7 +145,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
                 rs.next();
             }
             agendaescolar.close();
-        }catch(Exception e){
+        } catch (Exception e) {
             e.getMessage();
         }
     }
@@ -180,7 +180,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
         }
     }*/
 
-    public int testGetCursor(){
+    public int testGetCursor() {
         SQLiteDatabase agendaescolar = this.getReadableDatabase();
         Cursor c = agendaescolar.rawQuery("SELECT * FROM Horario WHERE Dia='Lunes'", null);
         //String[][] Horario = new String[3][c.getCount()]; // = new String[c.getCount()][3];
@@ -189,29 +189,29 @@ public class UserDBHelper extends SQLiteOpenHelper {
     }
 
 
-    public String[][] getHorarioDia(String Dia){
+    public String[][] getHorarioDia(String Dia) {
         SQLiteDatabase agendaescolar = this.getReadableDatabase();
-        String [] args = new String[] {Dia};
+        String[] args = new String[]{Dia};
         Cursor c = agendaescolar.rawQuery("SELECT * FROM Horario WHERE Dia=? ORDER BY HrInicio", args);
         String[][] Horario = new String[c.getCount()][3]; // = new String[c.getCount()][3];
         c.moveToFirst();
-        for(int i=0; i<c.getCount(); i++){
-            Horario[i][0]=c.getString(1);
-            Horario[i][1]=c.getString(3)+":00 - "+c.getString(4)+":00";
-            Horario[i][2]=c.getString(5);
+        for (int i = 0; i < c.getCount(); i++) {
+            Horario[i][0] = c.getString(1);
+            Horario[i][1] = c.getString(3) + ":00 - " + c.getString(4) + ":00";
+            Horario[i][2] = c.getString(5);
             c.moveToNext();
         }
         return Horario;
     }
 
-    public boolean LogTry(String UserName, String Password){
+    public boolean LogTry(String UserName, String Password) {
         SQLiteDatabase agendaescolar = this.getReadableDatabase();
-        String [] args = new String[] {UserName, Password};
+        String[] args = new String[]{UserName, Password};
         Cursor c = agendaescolar.rawQuery("SELECT * FROM usuarios WHERE NombreUsuario=? AND Contrasena=?", args);
-        if(c.getCount()!=0){
+        if (c.getCount() != 0) {
             setSession(true);
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -227,40 +227,40 @@ public class UserDBHelper extends SQLiteOpenHelper {
         }
     }*/
 
-    public void setSession(boolean state){
-            SQLiteDatabase agendaescolar = this.getReadableDatabase();
-            ContentValues valores = new ContentValues();
+    public void setSession(boolean state) {
+        SQLiteDatabase agendaescolar = this.getReadableDatabase();
+        ContentValues valores = new ContentValues();
 
-            valores.put("Estado", state);
-            agendaescolar.update("usuarios", valores, "ID=1", null);
+        valores.put("Estado", state);
+        agendaescolar.update("usuarios", valores, "ID=1", null);
 
-            agendaescolar.close();
+        agendaescolar.close();
     }
 
-    public boolean getSession(){
+    public boolean getSession() {
         SQLiteDatabase agendaescolar = this.getReadableDatabase();
-        String[] args = new String[] {"1"};
+        String[] args = new String[]{"1"};
         Cursor c = agendaescolar.rawQuery("SELECT Estado FROM usuarios WHERE ID=?", args);
-        if(c.moveToFirst()){
+        if (c.moveToFirst()) {
             String state = c.getString(0);
-            if("online".equals(state)){
+            if ("online".equals(state)) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
-        }else{
+        } else {
             return false;
         }
     }
 
     public boolean refreshData(String[] personalData) {
         try {
-            personalData[1]=getMD5(personalData[1]);
+            personalData[1] = getMD5(personalData[1]);
             conn = conectar.conectar();
             PreparedStatement stm = conn.prepareStatement("UPDATE usuarios SET NombreUsuario=?, " +
-                    "Contrasena=?, Nombre=?, Apellidos=?, Telefono=?, Correo=?, Carrera=?, Institucion=? WHERE NombreUsuario='"+getPersonalInfo()[1]+"'");
-            for(int i=0; i<8; i++){
-                stm.setString(i+1, personalData[i]);
+                    "Contrasena=?, Nombre=?, Apellidos=?, Telefono=?, Correo=?, Carrera=?, Institucion=? WHERE NombreUsuario='" + getPersonalInfo()[1] + "'");
+            for (int i = 0; i < 8; i++) {
+                stm.setString(i + 1, personalData[i]);
             }
             stm.executeUpdate();
             SQLiteDatabase agendaescolar = this.getReadableDatabase();
@@ -278,7 +278,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
             agendaescolar.close();
 
             return true;
-        }catch(Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
@@ -286,7 +286,28 @@ public class UserDBHelper extends SQLiteOpenHelper {
     public boolean checkPrivacidadHorario() throws Exception {
         conn = conectar.conectar();
         Statement stm = conn.createStatement();
-        ResultSet rs = stm.executeQuery("SELECT PrivacidadHorario FROM usuarios WHERE NombreUsuario='"+getPersonalInfo()[1]+"'");
-        return true;
+        ResultSet rs = stm.executeQuery("SELECT PrivacidadHorario FROM usuarios WHERE NombreUsuario='" + getPersonalInfo()[1] + "'");
+        rs.first();
+        if (rs.getString("PrivacidadHorario") == "Publico") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean setPrivacidadHorario(boolean privacy) throws Exception {
+        try {
+            conn = conectar.conectar();
+            PreparedStatement stm = conn.prepareStatement("UPDATE usuarios SET PrivacidadHorario=? WHERE NombreUsuario='" + getPersonalInfo()[1] + "'");
+            if (privacy) {
+                stm.setString(0, "Publico");
+            } else {
+                stm.setString(0, "Privado");
+            }
+            stm.executeUpdate();
+            return true;
+        }catch(Exception e){
+            return false;
+        }
     }
 }
