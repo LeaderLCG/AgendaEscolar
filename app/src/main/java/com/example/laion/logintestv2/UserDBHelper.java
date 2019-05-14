@@ -288,7 +288,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
         Statement stm = conn.createStatement();
         ResultSet rs = stm.executeQuery("SELECT PrivacidadHorario FROM usuarios WHERE NombreUsuario='" + getPersonalInfo()[1] + "'");
         rs.first();
-        if (rs.getString("PrivacidadHorario") == "Publico") {
+        if (rs.getString("PrivacidadHorario").equals("Publico")) {
             return true;
         } else {
             return false;
