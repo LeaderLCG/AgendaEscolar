@@ -114,8 +114,9 @@ public class UserProfile extends AppCompatActivity implements
             public void onClick(View v) {
                 try {
                     profileFragment.save();
+                    Toast.makeText(getApplicationContext(), "Actualizado con éxito.", Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "Error al guardar tus Datos.", Toast.LENGTH_LONG).show();
+                    /* Toast.makeText(getApplicationContext(), "Error al guardar tus Datos.", Toast.LENGTH_LONG).show(); */
                 }
             }
         });

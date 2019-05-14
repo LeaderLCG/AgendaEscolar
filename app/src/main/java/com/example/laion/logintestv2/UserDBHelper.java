@@ -259,7 +259,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
             conn = conectar.conectar();
             PreparedStatement stm = conn.prepareStatement("UPDATE usuarios SET NombreUsuario=?, " +
                     "Contrasena=?, Nombre=?, Apellidos=?, Telefono=?, Correo=?, Carrera=?, Institucion=? WHERE NombreUsuario='" + getPersonalInfo()[1] + "'");
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i <= 7; i++) {
                 stm.setString(i + 1, personalData[i]);
             }
             stm.executeUpdate();

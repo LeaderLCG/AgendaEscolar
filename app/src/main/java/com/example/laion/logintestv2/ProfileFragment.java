@@ -251,25 +251,26 @@ public class ProfileFragment extends Fragment {
         PersonalData[7]= String.valueOf(InstitucionInput.getText());
 
 
+        if(UDB.refreshData(PersonalData)){
+            PersonalData=UDB.getPersonalInfo();
+            UserNameInput.setText(PersonalData[0]);
+            NombreInput.setText(PersonalData[2]);
+            ApellidoInput.setText(PersonalData[3]);
+            CorreoInput.setText(PersonalData[4]);
+            TelefonoInput.setText(PersonalData[5]);
+            CarreraInput.setText(PersonalData[6]);
+            InstitucionInput.setText(PersonalData[7]);
+            Toast.makeText(getActivity().getBaseContext(), "Actualización exitosa", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(getActivity().getBaseContext(), "Hubo un fallo al actualizar", Toast.LENGTH_LONG).show();
+        }
+
+
+
         if(switchhorario.isChecked()){
             UDB.setPrivacidadHorario(true);
         }else{
             UDB.setPrivacidadHorario(false);
-        }
-
-
-        if(UDB.refreshData(PersonalData)){
-            PersonalData=UDB.getPersonalInfo();
-            NombreInput.setText(PersonalData[2]);
-            ApellidoInput.setText(PersonalData[3]);
-            UserNameInput.setText(PersonalData[0]);
-            TelefonoInput.setText(PersonalData[5]);
-            CorreoInput.setText(PersonalData[4]);
-            CarreraInput.setText(PersonalData[6]);
-            InstitucionInput.setText(PersonalData[7]);
-            Toast.makeText(getActivity().getBaseContext(), "Actualizacion exitosa", Toast.LENGTH_LONG).show();
-        }else{
-            Toast.makeText(getActivity().getBaseContext(), "Hubo un fallo al actualizar", Toast.LENGTH_LONG).show();
         }
 
     }
