@@ -9,7 +9,7 @@ import java.sql.Statement;
 public class Conexion {
     Connection con=null;
 
-    Connection conectar() throws Exception{
+    public Connection conectar() throws Exception{
         Class.forName("com.mysql.jdbc.Driver").newInstance();
 
         con = DriverManager.getConnection("jdbc:mysql://107.180.12.177:3306/agendaescolar2", "proyectoagenda2", "proyecto");

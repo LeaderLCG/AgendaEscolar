@@ -1,10 +1,12 @@
 package com.example.laion.logintestv2;
 
+import android.animation.Animator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,8 +14,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
 
 public class User extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -23,8 +28,9 @@ public class User extends AppCompatActivity implements
         ThursdayFragment.OnFragmentInteractionListener,
         FridayFragment.OnFragmentInteractionListener,
         SaturdayFragment.OnFragmentInteractionListener
-{
 
+
+{
 
     MondayFragment mondayfragment;
     TuesdayFragment tuesdayfragment;
@@ -32,6 +38,8 @@ public class User extends AppCompatActivity implements
     ThursdayFragment thursdayfragment;
     FridayFragment fridayfragment;
     SaturdayFragment saturdayfragment;
+
+    private android.support.design.widget.FloatingActionButton fabAgregarHorario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,7 +163,8 @@ public class User extends AppCompatActivity implements
                 break;
         }
 
-        transaction.commit();
+         transaction.commit();
+
     }
 
     @Override

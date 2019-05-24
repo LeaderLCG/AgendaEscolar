@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 
+//Esta clase es el adapatador que nos permite cargar los fragmentos que tenemos en el ViewPager
+
 public class PageAdapter extends FragmentPagerAdapter {
 
     private ArrayList<Fragment> fragments;

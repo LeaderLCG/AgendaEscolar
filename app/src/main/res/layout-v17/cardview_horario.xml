@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvHorario"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/activity_vertical_margin"
+    card_view:cardCornerRadius="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/imgEE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icons8_book_stack_48"/>
+            <TextView
+                android:id="@+id/tvNameEE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre de materia"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingLeft="10dp"/>
+            <TextView
+                android:id="@+id/tvDiaEE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dia de la materia"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingLeft="10dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvHrIEE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hora incio"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:paddingLeft="25dp"/>
+                <TextView
+                    android:id="@+id/tvHrFEE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hora fin"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:paddingLeft="25dp"/>
+                <TextView
+                    android:id="@+id/tvSalonEE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Salon"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:paddingLeft="25dp"/>
+
+           </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
